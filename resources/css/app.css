@@ -1,2 +1,11 @@
 @import "tailwindcss";
 @source "../views";
+
+body {
+    font-family: "Arial", sans-serif;
+}
+
+h1,
+h2 {
+    font-family: "Verdana", sans-serif;
+}
