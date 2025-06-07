@@ -1,2 +1,4 @@
 import "./bootstrap";
-import "./toggle-signup-login.js";
+import "./password-toggle.js";
+import "./dashboard-collapsible.js";
+import "./user-menu-dropdown.js";

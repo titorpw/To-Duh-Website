@@ -14,3 +14,9 @@ Route::post('signup', [AuthController::class, 'storeSignup'])->name('signup.stor
 Route::get('login', [AuthController::class, 'showLoginForm'])->name('login');
 
 Route::post('login', [AuthController::class, 'storeLogin'])->name('login.store');
+
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
+Route::get('/dashboard', function () {
+    return view('dashboard.dashboard');
+})->middleware('auth')->name('dashboard');
