@@ -46,16 +46,32 @@ class AuthController extends Controller
 
     public function storeLogin(Request $request)
     {
-        $validated = $request->validate([
-            'email' => 'required|email|max:255',
-            'password' => 'required|string|min:8',
+        $credentials = $request->validate([
+            'email' => 'required|email',
+            'password' => 'required|string',
         ]);
 
-        if (Auth::attempt(['email' => $validated['email'], 'password' => $validated['password']])) {
-            return redirect()->intended('home'); // Ganti 'home' dengan halaman tujuan Anda
+        $remember = $request->boolean('remember');
+
+        if (Auth::attempt($credentials, $remember)) {
+            $request->session()->regenerate();
+
+            return redirect()->route('dashboard');
         }
 
-        // Jika login gagal
-        return back()->withErrors(['email' => 'Email atau password salah.'])->withInput();
+        return back()->withErrors([
+            'email' => 'The provided credentials do not match our records.',
+        ])->onlyInput('email');
+    }
+
+    public function logout(Request $request)
+    {
+        Auth::logout();
+
+        $request->session()->invalidate();
+
+        $request->session()->regenerateToken();
+
+        return redirect('/');
     }
 }
