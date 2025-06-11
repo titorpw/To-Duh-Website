@@ -15,6 +15,9 @@
         .collapsible-icon {
             transition: transform 0.3s ease-in-out;
         }
+        .collapsible-header.open .collapsible-icon {
+            transform: rotate(180deg);
+        }
         body {
             font-family: 'Poppins', sans-serif;
         }
@@ -86,7 +89,7 @@
                                 <span class="icon-mask icon-events h-6 w-6"></span>
                                 <span>All Events</span>
                             </a>
-                            <a href="#" class="flex items-center space-x-3 text-gray-600 font-semibold px-4 py-2 rounded-lg hover:bg-teal-100 transition-colors">
+                            <a href="{{ route('calendar.index') }}" class="flex items-center space-x-3 text-[#22ACB1] font-semibold px-4 py-2 rounded-lg hover:bg-teal-100 transition-colors">
                                 <span class="icon-mask icon-calendar h-6 w-6"></span>
                                 <span>Calendar</span>
                             </a>
@@ -124,12 +127,12 @@
                     <div class="space-y-6">
                         <!-- Bagian Upcoming -->
                         <div>
-                            <div class="collapsible-header bg-[#377684] text-white font-bold py-3 px-4 rounded-lg grid grid-cols-3 items-center cursor-pointer">
+                           <div class="collapsible-header bg-[#377684] text-white font-bold py-3 px-4 rounded-lg grid grid-cols-3 items-center cursor-pointer">
                                 <div></div>
                                 <span class="text-center">Upcoming</span>
                                 <img src="{{ asset('images/chevron-down.png') }}" alt="Toggle" class="collapsible-icon h-5 w-5 justify-self-end" style="filter: invert(1);">
                             </div>
-                            <div id="upcoming-events-list" class="collapsible-content space-y-2 mt-2">
+                            <div id="upcoming-events-list" class="collapsible-content space-y-2 mt-2 hidden">
                                 @forelse ($upcomingEvents as $event)
                                     <div id="event-item-{{ $event->id }}" class="event-item flex items-center justify-between p-3 border-b hover:bg-gray-50 rounded-md transition-all duration-300">
                                         <div class="flex items-center space-x-4">
@@ -146,7 +149,7 @@
                                             </div>
                                         </div>
                                         <div class="flex items-center space-x-3 text-gray-400">
-                                            <button class="hover:text-blue-500"><img src="{{ asset('images/edit-icon.png') }}" alt="Edit" class="h-5 w-5"></button>
+                                            <a href="{{ route('events.edit', $event) }}" class="hover:text-blue-500"><img src="{{ asset('images/edit-icon.png') }}" alt="Edit" class="h-5 w-5"></a>
                                             <button class="event-delete-btn hover:text-red-500" data-url="{{ route('events.destroy', $event) }}">
                                                 <img src="{{ asset('images/delete-icon.png') }}" alt="Delete" class="h-5 w-5">
                                             </button>

@@ -18,9 +18,6 @@
                 <form action="{{ route('signup.store') }}" method="POST">
                     @csrf
 
-                    {{-- ========================================================== --}}
-                    {{-- <-- TAMBAHAN 1: Blok untuk menampilkan error validasi -->   --}}
-                    {{-- ========================================================== --}}
                     @if ($errors->any())
                         <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg relative mb-4" role="alert">
                             <strong class="font-bold">Oops! There were some problems:</strong>
