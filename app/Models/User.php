@@ -9,8 +9,6 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use App\Models\Event;
 
 /**
- * 
- *
  * @property int $id
  * @property string $first_name
  * @property string $last_name
@@ -40,6 +38,7 @@ use App\Models\Event;
  * @method static \Illuminate\Database\Eloquent\Builder|User whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereUsername($value)
  * @mixin \Eloquent
+ * @mixin IdeHelperUser
  */
 class User extends Authenticatable
 {

@@ -4,13 +4,12 @@ document.addEventListener("DOMContentLoaded", function () {
     headers.forEach((header) => {
         header.addEventListener("click", function () {
             const content = this.nextElementSibling;
-            const icon = this.querySelector(".collapsible-icon");
 
-            if (content && icon) {
+            if (content) {
                 content.classList.toggle("hidden");
-
-                icon.classList.toggle("rotate-180");
             }
+
+            this.classList.toggle("open");
         });
     });
 });

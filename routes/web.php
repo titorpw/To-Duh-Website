@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\CalendarController;
 
 Route::get('/', function () {
     return view('homepage.homepage');
@@ -25,10 +26,29 @@ Route::get('/events/create', [EventController::class, 'create'])
     ->middleware('auth')
     ->name('events.create');
 
+// Rute untuk menampilkan halaman Kalender
+Route::get('/calendar', [CalendarController::class, 'index'])
+    ->middleware('auth')
+    ->name('calendar.index');
+
+// Rute API untuk menyediakan data event ke kalender
+Route::get('/api/events', [EventController::class, 'getEventsForCalendar'])
+    ->middleware('auth')
+    ->name('api.events');
+
 // Rute untuk menyimpan event baru dari form
 Route::post('/events', [EventController::class, 'store'])
     ->middleware('auth')
     ->name('events.store');
+
+Route::get('/events/{event}/edit', [EventController::class, 'edit'])
+    ->middleware('auth')
+    ->name('events.edit');
+
+// Rute untuk memproses update event dari form
+Route::patch('/events/{event}', [EventController::class, 'update'])
+    ->middleware('auth')
+    ->name('events.update');
 
 // Rute untuk mengubah status selesai (menggunakan metode PATCH)
 Route::patch('/events/{event}/toggle-complete', [EventController::class, 'toggleComplete'])
