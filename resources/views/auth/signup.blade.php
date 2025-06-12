@@ -28,14 +28,12 @@
                             </ul>
                         </div>
                     @endif
-                    {{-- ========================================================== --}}
 
                    <!-- First Name dan Last Name -->
                     <div class="flex mb-4 space-x-8">
                         <!-- First Name -->
                         <div class="w-full">
                             <label for="first_name" class="block text-black font-semibold">First Name<span class="text-red-500">*</span></label>
-                            {{-- TAMBAHAN 2: Menambahkan value="{{ old(...) }}" --}}
                             <input type="text" name="first_name" id="first_name" required class="w-60 p-2 mt-0 border rounded-full" style="background-color: #3BCFC9;" value="{{ old('first_name') }}" />
                         </div>
 

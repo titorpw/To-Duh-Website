@@ -14,10 +14,8 @@ class EventController extends Controller
      */
     public function create()
     {
-        // Mengambil semua kategori dari database untuk ditampilkan di dropdown
         $categories = Category::all();
 
-        // Mengirim data kategori ke view
         return view('dashboard.create-event', compact('categories'));
     }
 
@@ -26,7 +24,7 @@ class EventController extends Controller
      */
     public function store(Request $request)
     {
-        // 1. Validasi data yang masuk dari form
+        // Validasi data yang masuk dari form
         $validated = $request->validate([
             'event_name' => 'required|string|max:255',
             'category_id' => 'required|exists:categories,id',
@@ -35,19 +33,17 @@ class EventController extends Controller
             'description' => 'nullable|string',
         ]);
 
-        // 2. Gabungkan tanggal dan waktu menjadi satu format datetime
         $eventDateTime = $validated['event_date'] . ' ' . $validated['event_time'];
 
-        // 3. Buat event baru di database
+        // Buat event baru di database
         Event::create([
-            'user_id' => Auth::id(), // ID pengguna yang sedang login
+            'user_id' => Auth::id(),
             'category_id' => $validated['category_id'],
             'name' => $validated['event_name'],
             'event_date' => $eventDateTime,
             'description' => $validated['description'],
         ]);
 
-        // 4. Alihkan kembali ke dashboard dengan pesan sukses
         return redirect()->route('dashboard')->with('success', 'Event successfully created!');
     }
 
@@ -88,7 +84,7 @@ class EventController extends Controller
             abort(403, 'Unauthorized action.');
         }
 
-        // 1. Validasi data yang masuk dari form
+        // Validasi data yang masuk dari form
         $validated = $request->validate([
             'event_name' => 'required|string|max:255',
             'category_id' => 'required|exists:categories,id',
@@ -97,10 +93,9 @@ class EventController extends Controller
             'description' => 'nullable|string',
         ]);
 
-        // 2. Gabungkan tanggal dan waktu menjadi satu format datetime
         $eventDateTime = $validated['event_date'] . ' ' . $validated['event_time'];
 
-        // 3. Update event di database
+        // Update event di database
         $event->update([
             'category_id' => $validated['category_id'],
             'name' => $validated['event_name'],
@@ -108,7 +103,6 @@ class EventController extends Controller
             'description' => $validated['description'],
         ]);
 
-        // 4. Alihkan kembali ke dashboard dengan pesan sukses
         return redirect()->route('dashboard')->with('success', 'Event successfully updated!');
     }
 
@@ -118,10 +112,8 @@ class EventController extends Controller
             abort(403, 'Unauthorized action.');
         }
 
-        // Mengambil semua kategori untuk ditampilkan di dropdown
         $categories = Category::all();
 
-        // Mengirim data event yang spesifik dan semua kategori ke view
         return view('dashboard.edit-event', compact('event', 'categories'));
     }
 

@@ -31,7 +31,6 @@ class CategorySeeder extends Seeder
             ['name' => 'Travelling'],
         ];
 
-        // Melakukan loop dan membuat entri baru untuk setiap kategori
         foreach ($categories as $category) {
             Category::create($category);
         }

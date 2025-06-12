@@ -1,21 +1,18 @@
 document.addEventListener("DOMContentLoaded", function () {
     const upcomingList = document.getElementById("upcoming-events-list");
 
-    // Jika elemen itu ADA (artinya kita di halaman dashboard), baru jalankan semua kode di bawah.
     if (upcomingList) {
         // Mengambil CSRF token dari meta tag
         const csrfToken = document
             .querySelector('meta[name="csrf-token"]')
             .getAttribute("content");
 
-        // === ELEMEN MODAL ===
         const deleteModal = document.getElementById(
             "delete-confirmation-modal"
         );
         const confirmDeleteBtn = document.getElementById("confirm-delete-btn");
         const cancelDeleteBtn = document.getElementById("cancel-delete-btn");
 
-        // Variabel untuk menyimpan informasi event yang akan dihapus
         let eventToDeleteUrl = null;
         let eventToDeleteElement = null;
 
