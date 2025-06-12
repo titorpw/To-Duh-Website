@@ -51,6 +51,16 @@ class Event extends Model
     ];
 
     /**
+     * The attributes that should be cast.
+     * Ini akan memberitahu Laravel cara menangani kolom-kolom ini secara otomatis.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'event_date' => 'datetime',
+    ];
+
+    /**
      * Mendefinisikan bahwa sebuah Event dimiliki oleh satu User.
      */
     public function user()

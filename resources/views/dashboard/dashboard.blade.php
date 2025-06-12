@@ -23,7 +23,7 @@
         }
         .icon-mask {
             display: inline-block;
-            background-color: #22ACB1; /* Warna yang Anda inginkan */
+            background-color: #22ACB1;
             -webkit-mask-size: contain;
             mask-size: contain;
             -webkit-mask-repeat: no-repeat;
@@ -47,7 +47,6 @@
         <div class="container mx-auto px-6 h-20 flex justify-between items-center">
             <img src="{{ asset('images/logo.png') }}" alt="To-Duh! Logo" class="h-56 w-auto -ml-10">
 
-            <!-- Menu Pengguna -->
             <div class="flex items-center space-x-4">
                 <button class="hover:opacity-80">
                     <img src="{{ asset('images/moon.png') }}" alt="Dark Mode" class="h-6 w-6">
@@ -72,7 +71,7 @@
         </div>
     </header>
 
-    <!-- Konten Utama (dengan kotak rounded) -->
+    <!-- Sidebar Kiri -->
     <main class="container mx-auto p-4 sm:p-6 md:px-8 flex-grow">
         <div class="bg-white rounded-2xl shadow-xl p-6 md:p-8">
             <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">

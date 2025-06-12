@@ -9,3 +9,16 @@ h1,
 h2 {
     font-family: "Verdana", sans-serif;
 }
+
+.flatpickr-input {
+    background-color: #3bcfc9 !important;
+    color: white !important;
+    border-radius: 9999px !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+.flatpickr-input::placeholder {
+    color: white;
+    opacity: 0.7;
+}

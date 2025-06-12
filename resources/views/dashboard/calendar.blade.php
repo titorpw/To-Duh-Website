@@ -40,6 +40,24 @@
             background-color: var(--fc-event-bg-color);
             border-color: var(--fc-event-border-color);
         }
+        .icon-mask {
+            display: inline-block;
+            background-color: #22ACB1;
+            -webkit-mask-size: contain;
+            mask-size: contain;
+            -webkit-mask-repeat: no-repeat;
+            mask-repeat: no-repeat;
+            -webkit-mask-position: center;
+            mask-position: center;
+        }
+        .icon-events {
+            -webkit-mask-image: url("{{ asset('images/events-icon.png') }}");
+            mask-image: url("{{ asset('images/events-icon.png') }}");
+        }
+        .icon-calendar {
+            -webkit-mask-image: url("{{ asset('images/calendar-icon.png') }}");
+            mask-image: url("{{ asset('images/calendar-icon.png') }}");
+        }
     </style>
 </head>
 <body class="bg-gray-100 flex flex-col min-h-screen">
@@ -48,7 +66,6 @@
         <div class="container mx-auto px-6 h-20 flex justify-between items-center">
             <img src="{{ asset('images/logo.png') }}" alt="To-Duh! Logo" class="h-56 w-auto -ml-10">
 
-            <!-- Menu Pengguna -->
             <div class="flex items-center space-x-4">
                 <button class="hover:opacity-80">
                     <img src="{{ asset('images/moon.png') }}" alt="Dark Mode" class="h-6 w-6">
@@ -85,10 +102,12 @@
                             <span>Add New Event</span>
                         </a>
                         <nav class="space-y-2">
-                            <a href="{{ route('dashboard') }}" class="flex items-center space-x-3 text-gray-600 font-semibold px-4 py-2 rounded-lg hover:bg-teal-50 transition-colors">
+                            <a href="{{ route('dashboard') }}" class="flex items-center space-x-3 text-[#22ACB1] font-semibold px-4 py-2 rounded-lg hover:bg-teal-50 transition-colors">
+                                <span class="icon-mask icon-events h-6 w-6"></span>
                                 <span>All Events</span>
                             </a>
                             <a href="{{ route('calendar.index') }}" class="flex items-center space-x-3 text-[#22ACB1] font-semibold px-4 py-2 rounded-lg bg-teal-50 hover:bg-teal-100 transition-colors">
+                                <span class="icon-mask icon-calendar h-6 w-6"></span>
                                 <span>Calendar</span>
                             </a>
                         </nav>
@@ -97,7 +116,6 @@
 
                 <section class="lg:col-span-3">
                     <div class="flex justify-between items-center mb-6">
-                        <!-- Navigasi Kiri -->
                         <div class="flex items-center space-x-2">
                             <button id="cal-prev" class="p-2 rounded-md hover:bg-gray-100">
                                 <svg class="h-5 w-5 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
@@ -121,7 +139,7 @@
     </main>
 
     <footer class="w-full">
-        <div class="bg-[#0C3D4A] text-white text-xl flex items-center justify-center h-16">
+        <div class="bg-[#0C3D4A] text-white text-xl flex items-center justify-center h-12">
             <span>TO-DUH © 2025</span>
         </div>
     </footer>
