@@ -35,10 +35,12 @@
             -webkit-mask-position: center;
             mask-position: center;
         }
+
         .icon-events {
             -webkit-mask-image: url("{{ asset('images/events-icon.png') }}");
             mask-image: url("{{ asset('images/events-icon.png') }}");
         }
+
         .icon-calendar {
             -webkit-mask-image: url("{{ asset('images/calendar-icon.png') }}");
             mask-image: url("{{ asset('images/calendar-icon.png') }}");
@@ -67,6 +69,7 @@
         </div>
     </header>
 
+    <!-- Sidebar Kiri -->
     <main class="container mx-auto p-4 sm:p-6 md:px-8 flex-grow">
         <div class="bg-white rounded-2xl shadow-xl p-6 md:p-8">
             <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
@@ -83,7 +86,7 @@
                                 <span class="icon-mask icon-events h-6 w-6"></span>
                                 <span>All Events</span>
                             </a>
-                            <a href="#" class="flex items-center space-x-3 text-[#22ACB1] font-semibold px-4 py-2 rounded-lg hover:bg-teal-100 transition-colors">
+                            <a href="{{ route('calendar.index') }}" class="flex items-center space-x-3 text-[#22ACB1] font-semibold px-4 py-2 rounded-lg hover:bg-teal-100 transition-colors">
                                 <span class="icon-mask icon-calendar h-6 w-6"></span>
                                 <span>Calendar</span>
                             </a>
@@ -106,25 +109,47 @@
 
                             <!-- Category -->
                             <div class="mb-5">
-                                <label for="category_id" class="block text-sm font-medium text-gray-700 mb-1">Category<span class="text-red-500">*</span></label>
-                                <select name="category_id" id="category_id" required class="form-input-teal w-full px-4 py-3 border-none rounded-full appearance-none focus:outline-none focus:ring-2 focus:ring-teal-500">
-                                    <option value="" disabled selected class="text-white/80">Choose a category</option>
-                                    @foreach (\App\Models\Category::all() as $category)
-                                        <option value="{{ $category->id }}" class="text-black bg-white">{{ $category->name }}</option>
-                                    @endforeach
-                                </select>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Category<span class="text-red-500">*</span></label>
+                                <div class="relative" id="category-dropdown">
+                                    <input type="hidden" name="category_id" id="category_id" value="{{ old('category_id') }}">
+                                    <button type="button" id="category-dropdown-button" class="relative form-input-teal w-full pl-4 pr-12 py-3 border-none rounded-full text-left focus:outline-none focus:ring-2 focus:ring-teal-500">
+                                        <span id="category-selected-text" class="truncate">Choose a category</span>
+                                        <div id="category-arrow" class="absolute inset-y-0 right-0 flex items-center pr-4 pointer-events-none transition-transform duration-200 ease-in-out">
+                                            <img src="{{ asset('images/chevron-down.png') }}" class="w-5 h-5" alt="Dropdown Icon">
+                                        </div>
+                                    </button>
+
+                                    <div id="category-dropdown-panel" class="hidden absolute z-10 mt-1 w-full bg-white rounded-md shadow-lg max-h-60 overflow-auto">
+                                        @foreach (\App\Models\Category::all() as $category)
+                                            <div class="cursor-pointer hover:bg-gray-100 p-2 text-gray-800" data-value="{{ $category->id }}" data-text="{{ $category->name }}">
+                                                 {{ $category->name }}
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                </div>
                             </div>
 
+
                             <!-- Date -->
-                            <div class="mb-5 relative">
+                            <div class="mb-5">
                                 <label for="event_date" class="block text-sm font-medium text-gray-700 mb-1">Date<span class="text-red-500">*</span></label>
-                                <input type="date" name="event_date" id="event_date" required class="form-input-teal w-full px-4 py-3 border-none rounded-full focus:outline-none focus:ring-2 focus:ring-teal-500" value="{{ old('event_date') }}">
+                                <div class="relative">
+                                    <div class="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none">
+                                        <img src="{{ asset('images/calendar-field.png') }}" class="w-5 h-5" alt="Calendar Icon">
+                                    </div>
+                                    <input type="text" name="event_date" id="event_date" required class="date-picker block w-full pl-12 pr-4 py-3 border-none rounded-full focus:outline-none focus:ring-2 focus:ring-teal-500" value="{{ old('event_date') }}" placeholder="Select Date...">
+                                </div>
                             </div>
 
                             <!-- Time -->
                             <div class="mb-5">
                                 <label for="event_time" class="block text-sm font-medium text-gray-700 mb-1">Time<span class="text-red-500">*</span></label>
-                                <input type="time" name="event_time" id="event_time" required class="form-input-teal w-full px-4 py-3 border-none rounded-full focus:outline-none focus:ring-2 focus:ring-teal-500" value="{{ old('event_time') }}">
+                                <div class="relative">
+                                    <div class="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none">
+                                        <img src="{{ asset('images/clock-icon.png') }}" class="w-5 h-5" alt="Clock Icon">
+                                    </div>
+                                    <input type="text" name="event_time" id="event_time" class="time-picker block w-full pl-12 pr-4 py-3 border-none rounded-full focus:outline-none focus:ring-2 focus:ring-teal-500" value="{{ old('time') }}" placeholder="Select time.." >
+                                </div>
                             </div>
 
                             <!-- Description -->

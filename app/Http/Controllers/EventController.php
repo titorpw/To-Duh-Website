@@ -30,8 +30,8 @@ class EventController extends Controller
         $validated = $request->validate([
             'event_name' => 'required|string|max:255',
             'category_id' => 'required|exists:categories,id',
-            'event_date' => 'required|date',
-            'event_time' => 'required',
+            'event_date' => 'required|date_format:Y-m-d',
+            'event_time' => 'required|date_format:H:i',
             'description' => 'nullable|string',
         ]);
 
@@ -92,8 +92,8 @@ class EventController extends Controller
         $validated = $request->validate([
             'event_name' => 'required|string|max:255',
             'category_id' => 'required|exists:categories,id',
-            'event_date' => 'required|date',
-            'event_time' => 'required',
+            'event_date' => 'required|date_format:Y-m-d',
+            'event_time' => 'required|date_format:H:i',
             'description' => 'nullable|string',
         ]);
 

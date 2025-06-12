@@ -3,13 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Event - To-Duh!</title>
+    <title>Edit Event</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <style>
         body { font-family: 'Poppins', sans-serif; }
-        .form-input-teal::placeholder { color: white; opacity: 0.8; }
-        .form-input-teal { color: white; background-color: #3BCFC9; }
-        input[type="date"]::-webkit-calendar-picker-indicator { filter: invert(1) brightness(150%); }
+        .form-input-teal::placeholder {
+            color: white; opacity: 0.8;
+        }
+        .form-input-teal {
+            color: white; background-color: #3BCFC9;
+        }
+        input[type="date"]::-webkit-calendar-picker-indicator {
+            filter: invert(1) brightness(150%);
+        }
+
+        .icon-mask {
+            display: inline-block;
+            background-color: #22ACB1;
+            -webkit-mask-size: contain;
+            mask-size: contain;
+            -webkit-mask-repeat: no-repeat;
+            mask-repeat: no-repeat;
+            -webkit-mask-position: center;
+            mask-position: center;
+        }
+        .icon-events {
+            -webkit-mask-image: url("{{ asset('images/events-icon.png') }}");
+            mask-image: url("{{ asset('images/events-icon.png') }}");
+        }
+        .icon-calendar {
+            -webkit-mask-image: url("{{ asset('images/calendar-icon.png') }}");
+            mask-image: url("{{ asset('images/calendar-icon.png') }}");
+        }
     </style>
 </head>
 <body class="bg-gray-100 flex flex-col min-h-screen">
@@ -45,8 +70,14 @@
                             <span>Add New Event</span>
                         </a>
                         <nav class="space-y-2">
-                             <a href="{{ route('dashboard') }}" class="flex items-center space-x-3 text-gray-600 font-semibold px-4 py-2 rounded-lg hover:bg-teal-50 transition-colors"><span>All Events</span></a>
-                             <a href="#" class="flex items-center space-x-3 text-gray-600 font-semibold px-4 py-2 rounded-lg hover:bg-teal-50 transition-colors"><span>Calendar</span></a>
+                             <a href="{{ route('dashboard') }}" class="flex items-center space-x-3 text-[#22ACB1] font-semibold px-4 py-2 rounded-lg bg-teal-50 hover:bg-teal-100 transition-colors">
+                                <span class="icon-mask icon-events h-6 w-6"></span>
+                                <span>All Events</span>
+                            </a>
+                            <a href="{{ route('calendar.index') }}" class="flex items-center space-x-3 text-[#22ACB1] font-semibold px-4 py-2 rounded-lg hover:bg-teal-100 transition-colors">
+                                <span class="icon-mask icon-calendar h-6 w-6"></span>
+                                <span>Calendar</span>
+                            </a>
                         </nav>
                     </div>
                 </aside>
@@ -67,26 +98,46 @@
 
                             <!-- Category -->
                             <div class="mb-5">
-                                <label for="category_id" class="block text-sm font-medium text-gray-700 mb-1">Category<span class="text-red-500">*</span></label>
-                                <select name="category_id" id="category_id" required class="form-input-teal w-full px-4 py-3 border-none rounded-full appearance-none focus:outline-none focus:ring-2 focus:ring-teal-500">
-                                    @foreach ($categories as $category)
-                                        <option value="{{ $category->id }}" class="text-black bg-white" {{ old('category_id', $event->category_id) == $category->id ? 'selected' : '' }}>
-                                            {{ $category->name }}
-                                        </option>
-                                    @endforeach
-                                </select>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Category<span class="text-red-500">*</span></label>
+                                <div class="relative" id="category-dropdown">
+                                    <input type="hidden" name="category_id" id="category_id" value="{{ old('category_id', $event->category_id) }}">
+                                    <button type="button" id="category-dropdown-button" class="form-input-teal w-full pl-4 pr-12 py-3 border-none rounded-full text-left flex justify-between items-center focus:outline-none focus:ring-2 focus:ring-teal-500">
+                                        <span id="category-selected-text" class="truncate">Choose a category</span>
+                                        <div id="category-arrow" class="absolute inset-y-0 right-0 flex items-center pr-4 pointer-events-none transition-transform duration-200 ease-in-out">
+                                            <img src="{{ asset('images/chevron-down.png') }}" class="w-5 h-5" alt="Dropdown Icon">
+                                        </div>
+                                    </button>
+
+                                    <div id="category-dropdown-panel" class="hidden absolute z-10 mt-1 w-full bg-white rounded-md shadow-lg max-h-60 overflow-auto">
+                                        @foreach ($categories as $category)
+                                            <div class="cursor-pointer hover:bg-gray-100 p-2 text-gray-800" data-value="{{ $category->id }}" data-text="{{ $category->name }}">>
+                                                {{ $category->name }}
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                </div>
                             </div>
 
                             <!-- Date -->
-                            <div class="mb-5 relative">
+                            <div class="mb-5">
                                 <label for="event_date" class="block text-sm font-medium text-gray-700 mb-1">Date<span class="text-red-500">*</span></label>
-                                <input type="date" name="event_date" id="event_date" required class="form-input-teal w-full px-4 py-3 border-none rounded-full focus:outline-none focus:ring-2 focus:ring-teal-500" value="{{ old('event_date', \Carbon\Carbon::parse($event->event_date)->format('Y-m-d')) }}">
+                                <div class="relative">
+                                    <div class="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none">
+                                        <img src="{{ asset('images/calendar-field.png') }}" class="w-5 h-5" alt="Calendar Icon">
+                                    </div>
+                                    <input type="text" name="event_date" id="event_date" required class="date-picker block w-full pl-12 pr-4 py-3 border-none rounded-full focus:outline-none focus:ring-2 focus:ring-teal-500" value="{{ old('event_date', \Carbon\Carbon::parse($event->event_date)->format('Y-m-d')) }}" placeholder="Select Date...">
+                                </div>
                             </div>
 
                             <!-- Time -->
                             <div class="mb-5">
                                 <label for="event_time" class="block text-sm font-medium text-gray-700 mb-1">Time<span class="text-red-500">*</span></label>
-                                <input type="time" name="event_time" id="event_time" required class="form-input-teal w-full px-4 py-3 border-none rounded-full focus:outline-none focus:ring-2 focus:ring-teal-500" value="{{ old('event_time', \Carbon\Carbon::parse($event->event_date)->format('H:i')) }}">
+                                <div class="relative">
+                                    <div class="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none">
+                                        <img src="{{ asset('images/clock-icon.png') }}" class="w-5 h-5" alt="Clock Icon">
+                                    </div>
+                                   <input type="text" name="event_time" id="event_time" required class="time-picker block w-full pl-12 pr-4 py-3 border-none rounded-full focus:outline-none focus:ring-2 focus:ring-teal-500" value="{{ old('event_time', \Carbon\Carbon::parse($event->event_date)->format('H:i')) }}" placeholder="Select time..">
+                                </div>
                             </div>
 
                             <!-- Description -->
