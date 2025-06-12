@@ -56,7 +56,6 @@ class DashboardController extends Controller
 
         $completedEvents = $completedQuery->get();
 
-
         return view('dashboard.dashboard', [
             'upcomingEvents' => $upcomingEvents,
             'completedEvents' => $completedEvents,
