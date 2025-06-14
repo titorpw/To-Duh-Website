@@ -18,6 +18,12 @@ Route::post('login', [AuthController::class, 'storeLogin'])->name('login.store')
 
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
+Route::get('/profile', function () {
+    return view('profile.profile');
+})  
+    ->middleware('auth')
+    ->name('profile');
+
 Route::get('/dashboard', [DashboardController::class, 'index'])
     ->middleware('auth')
     ->name('dashboard');

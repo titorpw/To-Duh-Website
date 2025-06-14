@@ -14,7 +14,7 @@ class AuthController extends Controller
         return view('auth.signup');
     }
 
-    public function storeSignUp(Request $request)
+    public function storeSignup(Request $request)
     {
         // Validasi input
         $validated = $request->validate([
