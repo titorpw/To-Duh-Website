@@ -40,6 +40,7 @@
             mask-image: url("{{ asset('images/calendar-icon.png') }}");
         }
     </style>
+
 </head>
 <body class="bg-gray-100 flex flex-col min-h-screen">
 
@@ -215,5 +216,15 @@
             </div>
         </div>
     </div>
+
+
+    @if($is_birthday)
+    <script>
+        window.IS_BIRTHDAY = true;
+        window.USER_FIRST_NAME = @json(auth()->user()->first_name);
+        window.USER_LAST_NAME = @json(auth()->user()->last_name);
+    </script>
+    @endif
+
 </body>
 </html>

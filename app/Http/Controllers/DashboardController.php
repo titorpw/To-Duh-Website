@@ -20,6 +20,13 @@ class DashboardController extends Controller
 
         $isFiltering = $request->filled('search') || $request->filled('category');
 
+        $isBirthday = false;
+
+        if ($user && $user->birth_date) {
+            $birthDate = \Carbon\Carbon::parse($user->birth_date);
+            $isBirthday = $birthDate->isSameDay(now());
+        }
+
         $upcomingQuery = $user->events()
             ->where('is_completed', false)
             ->where('event_date', '>=', now())
@@ -37,7 +44,6 @@ class DashboardController extends Controller
         }
 
         $upcomingEvents = $upcomingQuery->get();
-
 
         $completedQuery = $user->events()
             ->where('is_completed', true)
@@ -60,6 +66,7 @@ class DashboardController extends Controller
             'upcomingEvents' => $upcomingEvents,
             'completedEvents' => $completedEvents,
             'categories' => $categories,
+            'is_birthday' => $isBirthday,
         ]);
     }
 }

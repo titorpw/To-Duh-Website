@@ -48,6 +48,7 @@ class Event extends Model
         'is_completed',
         'user_id',
         'category_id',
+        'is_birthday',
     ];
 
     /**

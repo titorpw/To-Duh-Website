@@ -4,8 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Event;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
+use Carbon\Carbon;
 
 class AuthController extends Controller
 {
@@ -16,7 +19,6 @@ class AuthController extends Controller
 
     public function storeSignup(Request $request)
     {
-        // Validasi input
         $validated = $request->validate([
             'first_name' => 'required|string|max:255',
             'last_name' => 'required|string|max:255',
@@ -26,7 +28,6 @@ class AuthController extends Controller
             'birth_date' => 'required|date',
         ]);
 
-        // Membuat pengguna baru
         $user = User::create([
             'first_name' => $validated['first_name'],
             'last_name' => $validated['last_name'],
@@ -34,6 +35,15 @@ class AuthController extends Controller
             'email' => $validated['email'],
             'password' => Hash::make($validated['password']),
             'birth_date' => $validated['birth_date'],
+        ]);
+
+        Event::create([
+            'user_id' => $user->id,
+            'name' => 'Ulang Tahun ' . $user->first_name,
+            'description' => 'Perayaan ulang tahun ' . $user->first_name,
+            'event_date' => Carbon::parse($user->birth_date)->setYear(Carbon::now()->year),
+            'category_id' => null,
+            'is_birthday' => true,
         ]);
 
         return redirect()->route('login')->with('success', 'Akun Berhasil Dibuat. Silahkan Login');
@@ -56,6 +66,15 @@ class AuthController extends Controller
         if (Auth::attempt($credentials, $remember)) {
             $request->session()->regenerate();
 
+            $user = Auth::user();
+
+            if ($user->birth_date) {
+                $birthDate = Carbon::parse($user->birth_date);
+                if ($birthDate->isBirthday()) {
+                    session(['is_birthday' => true]);
+                }
+            }
+
             return redirect()->route('dashboard');
         }
 
@@ -71,6 +90,8 @@ class AuthController extends Controller
         $request->session()->invalidate();
 
         $request->session()->regenerateToken();
+
+        $request->session()->forget('is_birthday');
 
         return redirect('/');
     }
