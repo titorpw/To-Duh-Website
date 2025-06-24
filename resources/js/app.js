@@ -152,7 +152,7 @@ if (window.IS_BIRTHDAY) {
         setTimeout(() => {
             overlay.remove();
             bigMessage.remove();
-        }, 10000);
+        }, 4000);
     });
 }
 
