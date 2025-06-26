@@ -10,6 +10,13 @@ import "./event-actions.js";
 import "./calendar-setup.js";
 import './confetti.min.js';
 
+const savedTheme = localStorage.getItem('theme');
+if (savedTheme === 'dark') {
+    document.documentElement.classList.add('dark');
+} else {
+    document.documentElement.classList.remove('dark');
+}
+
 document.addEventListener("DOMContentLoaded", () => {
     flatpickr(".time-picker", {
         enableTime: true,

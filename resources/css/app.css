@@ -1,5 +1,4 @@
 @import "tailwindcss";
-@source "../views";
 
 body {
     font-family: "Arial", sans-serif;
