@@ -20,7 +20,7 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::get('/profile', function () {
     return view('profile.profile');
-})  
+})
     ->middleware('auth')
     ->name('profile');
 

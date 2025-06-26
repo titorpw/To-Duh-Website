@@ -42,11 +42,11 @@ class AuthController extends Controller
             'name' => 'Ulang Tahun ' . $user->first_name,
             'description' => 'Perayaan ulang tahun ' . $user->first_name,
             'event_date' => Carbon::parse($user->birth_date)->setYear(Carbon::now()->year),
-            'category_id' => null,
+            'category_id' => 1,
             'is_birthday' => true,
         ]);
 
-        return redirect()->route('login')->with('success', 'Akun Berhasil Dibuat. Silahkan Login');
+        return redirect()->route('login')->with('success', 'Akun berhasil dibuat! Silakan masuk.');
     }
 
     public function showLoginForm()
@@ -75,11 +75,11 @@ class AuthController extends Controller
                 }
             }
 
-            return redirect()->route('dashboard');
+            return redirect()->route('dashboard')->with('success', 'Berhasil masuk! Selamat datang kembali.');
         }
 
         return back()->withErrors([
-            'email' => 'The provided credentials do not match our records.',
+            'email' => 'Kredensial yang diberikan tidak cocok dengan catatan kami.',
         ])->onlyInput('email');
     }
 
@@ -93,6 +93,6 @@ class AuthController extends Controller
 
         $request->session()->forget('is_birthday');
 
-        return redirect('/');
+        return redirect('/')->with('success', 'Anda telah berhasil keluar.');
     }
 }

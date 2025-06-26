@@ -44,7 +44,7 @@ class EventController extends Controller
             'description' => $validated['description'],
         ]);
 
-        return redirect()->route('dashboard')->with('success', 'Event successfully created!');
+        return redirect()->route('dashboard')->with('success', 'Event Berhasil Dibuat!');
     }
 
     /**
@@ -103,7 +103,7 @@ class EventController extends Controller
             'description' => $validated['description'],
         ]);
 
-        return redirect()->route('dashboard')->with('success', 'Event successfully updated!');
+        return redirect()->route('dashboard')->with('success', 'Event Berhasil Diupate!');
     }
 
     public function edit(Event $event)

@@ -15,8 +15,6 @@
 
             <!-- Right Side Menu -->
             <div class="flex items-center space-x-4">
-                <img src="{{ asset('images/moon.png') }}" alt="Dark Mode" class="h-6 w-6 cursor-pointer">
-
                 @auth
                     <!-- Jika user login -->
                     <div class="relative">
