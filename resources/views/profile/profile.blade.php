@@ -19,7 +19,6 @@
         <div class="container mx-auto px-6 h-20 flex justify-between items-center">
             <img src="{{ asset('images/logo.png') }}" alt="To-Duh! Logo" class="h-56 w-auto -ml-10">
             <div class="flex items-center space-x-4">
-                <img src="{{ asset('images/moon.png') }}" alt="Dark Mode" class="h-6 w-6 cursor-pointer">
                 <div class="relative">
                     <button type="button" id="user-menu-button" class="flex items-center space-x-2 focus:outline-none">
                         <img src="{{ asset('images/user-icon.png') }}" alt="User" class="h-7 w-7" style="filter: invert(1);">
