@@ -14,6 +14,23 @@
                 <img src="{{ asset('images/logo.png') }}" alt="To-Duh! Logo" class="w-90 h-auto">
             </div>
 
+            @if (session('success'))
+                    <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-lg relative mb-4" role="alert">
+                        <span class="block sm:inline">{{ session('success') }}</span>
+                    </div>
+            @endif
+
+             @if ($errors->any())
+                <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg relative mb-4" role="alert">
+                    <strong class="font-bold">Terjadi Kesalahan!</strong>
+                    <ul class="mt-2 list-disc list-inside text-sm">
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+
             <form action="{{ route('login.store') }}" method="POST">
                 @csrf
                 <!-- Username/Email -->
@@ -46,7 +63,6 @@
                     <div class="mb-0">
                         <span class="text-red-500 text-sm">*This field is required to fill</span>
                     </div>
-
                     <button type="submit" class="w-full bg-[#1986AF] text-white font-bold py-3 rounded-full hover:bg-[#1986AF] transition-all focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500">Login</button>
                 </div>
             </form>

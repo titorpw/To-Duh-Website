@@ -8,14 +8,7 @@ import "./category-filter.js";
 import "./search-reset.js";
 import "./event-actions.js";
 import "./calendar-setup.js";
-import './confetti.min.js';
-
-const savedTheme = localStorage.getItem('theme');
-if (savedTheme === 'dark') {
-    document.documentElement.classList.add('dark');
-} else {
-    document.documentElement.classList.remove('dark');
-}
+import "./confetti.min.js";
 
 document.addEventListener("DOMContentLoaded", () => {
     flatpickr(".time-picker", {
@@ -106,9 +99,9 @@ if (window.IS_BIRTHDAY) {
                     startVelocity: 40,
                     origin: {
                         x: Math.random(),
-                        y: Math.random() * 0.5
+                        y: Math.random() * 0.5,
                     },
-                    ticks: 300
+                    ticks: 300,
                 });
             }, i * 500);
         }
@@ -149,7 +142,7 @@ if (window.IS_BIRTHDAY) {
                     margin-top: 12px;
                 ">
                     All the best wishes for you!
-                </div>    
+                </div>
             </div>
         `;
 
@@ -162,4 +155,3 @@ if (window.IS_BIRTHDAY) {
         }, 4000);
     });
 }
-
